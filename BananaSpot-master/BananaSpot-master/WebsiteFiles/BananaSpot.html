@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>BananaSpot</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+
+<body>
+<!-- Navbar -->
+<div class="top">
+  <div class="bar blue card left-align large">
+    <a class="bar-item button hide-medium hide-large right padding-large hover-white large red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="bar-item button padding-large white">Home</a>
+    <a href="#" class="bar-item button hide-small padding-large hover-white">Link 1</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="bar-block white hide hide-large hide-medium large">
+    <a href="#" class="bar-item button padding-large">Link 1</a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="container blue center" style="padding:128px 16px">
+  <h1 class="margin jumbo">Na, wieder Sauer? schlechter Router?</h1>
+  <h1 class="margin jumbo">Hier ist die perfekte DIY Lösung!</h1>
+  <p class="xlarge">made by Sven, Saima and Yakup</p>
+</header>
+
+
+<div class="row-padding padding-64 container">
+  <div class="content">
+    <div class="twothird">
+      <h1>BananaSpot</h1>
+      <h5 class="padding-32">Du hast Probleme mit deiner Internetverbindung wegen deinem sch?!# Router? Und hast keine Lust auf den nervigen Support, der eh nur wieder sagt, dass du den Router neustarten sollst? Hier ist die perfekte DIY Lösung!</h5>
+      <p>Damit ihr keine Zeit verliert und suchen müsst, haben wir euch die nötigen Teile rausgesucht.</p>
+      <table>
+                <tr>
+                  <th>Artikel</th>
+                  <th>Preis</th>
+                </tr>
+                <tr>
+                  <td>RasperryPi 3B</td>
+                  <td>35,89€</td>
+                </tr>
+                <tr>
+                  <td>Wlan Adapter</td>
+                  <td>9,99€</td>
+                </tr>
+                <tr>
+                  <td>RasperryPi 3B + Case</td>
+                  <td>4,79€</td>
+                </tr>
+				<tr>
+				<td><b>Summe</b></td>
+				<td>50,67€</td>
+				</tr>
+              </table>
+      <p class="text-grey"></p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding light-grey padding-64 container">
+  <div class="content">
+    <div class="third center">
+      <img alt="Raspberry_Pi_Logo" src="https://upload.wikimedia.org/wikipedia/de/c/cb/Raspberry_Pi_Logo.svg"
+         width="300" height="300">
+    </div>
+
+    <div class="twothird">
+      <h1>Schritt 1</h1>
+      <h5 class="padding-32">Installiere und Update Raspbian</h5>
+
+      <p class="text-grey">Setze folgende Zeilen in der Kommandozeile ab und führe sie aus und führe danach einen Neustart durch:</br>
+        <b>sudo apt-get update</b></br>
+        <b>sudo apt-get upgrade</b></p>
+    </div> 
+  </div>
+</div>
+
+
+<div class="row-padding padding-64 container">
+  <div class="content">
+    <div class="twothird">
+      <h1>Schritt 2 </h1>
+      <h5 class="padding-32">Installiere hostapd and dnsmasq</h5>
+
+      <p class="text-grey">Installiere hostapd and dnsmasq
+        Info: Diese zwei Programme lassen deinen Rasperry Pi so wie einen Router arbeiten.
+        Setze folgende Zeilen in der Kommandozeile ab:</br>			
+        <b>sudo apt-get install hostapd</b></br>
+        <b>sudo apt-get install dnsmasq</b></p>
+    </div>
+
+    <div class="third center">
+      <img alt="ClientServerHost "src="client-server-host.png"
+	  width="300" height="300">
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding light-grey padding-64 container">
+  <div class="content">
+    <div class="third center">
+      <img alt="IpAdress "src="IpAdress.png"
+	  width="300" height="300">
+    </div>
+
+    <div class="twothird">
+      <h1>Schritt 3</h1>
+      <h5 class="padding-32">Konfiguriere eine statische IP-Adresse für das Wlan0-Interface</h5>
+
+      <p class="text-grey">Die standart IP-Adresse für ein Netzwerk zu Hause sollte so aussehen "192.168.###.###."(# sind hier lediglich Platzhalter). 
+        In unserem Beispiel ist die IP-Adresse von unserem Wlan0-Interface 192.168.0.20.</br>
+        
+        Öffne den Editor mit folgendem Befehl:</br>
+        <b>sudo nano /etc/dhcpcd.conf</b></br>
+        Und nun füge die folgenden Zeilen am Ende des Dokumentes hinzu:</br>
+  
+        <b>interface wlan0</b></br>
+        <b>static ip_address=192.168.0.20/24</b></br>
+        <b>denyinterfaces eth0</b></br>
+        <b>denyinterfaces wlan0</b></br>
+        
+        Nach dem die Zeilen hinzugefügt sind drücke strg + X dann Y und Enter damit die Datei gespeichert wird.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding padding-64 container">
+  <div class="content">
+    <div class="twothird">
+      <h1>Schritt 4</h1>
+      <h5 class="padding-32">Konfiguriere den DHCP-Server (dnsmasq)</h5>
+
+      <p class="text-grey">Wir verwenden dnsmasq als unseren DHCP-Server. Dieser DHCP-Server verteilt die Netzwerk-Konfiguration dynamisch an die Netzteilnehmer.
+        Dnsmasq Standart-Konfiguration beinhaltet eine Menge unnötiger Informationen, daher benennen wir die Standart-Konfigurations Datei um und schreibe einen neue Datei mit folgenden Zeilen:</br>
+        <b>sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig</b></br>
+        <b>sudo nano /etc/dnsmasq.conf</b></br>
+        
+        Somit hast du die eigentliche Datei auf "dnsmasq.conf.orig" umbenannt und erstellst eine neue Datei mit dem Namen "dnsmasq.conf".
+        
+        In diese neue Datei soll dann folgende Konfiguration enthalten sein:</br>
+        
+        <b>interface=wlan0</b></br>
+        <b>dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h</b></p>
+    </div>
+
+    <div class="third center">
+      <img alt="DHCPServer" src="dhcp-server.png"
+	  width="300" height="300">
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding light-grey padding-64 container">
+  <div class="content">
+    <div class="third center">
+      <img alt="DHCPServer" src="AccessPoint.png"
+	  width="300" height="300">
+    </div>
+
+    <div class="twothird">
+      <h1>Schritt 5</h1>
+      <h5 class="padding-32">Konfiguration des Access-Points Host-Software (hostapd)</h5>
+
+      <p class="text-grey">Dieses Mal konfigurieren wir die hostapd-Datei mit folgenden Zeilen:</br>
+			
+        <b>sudo nano /etc/hostapd/hostapd.conf</b></br>
+        
+        Und in diese Datei soll folgende Konfiguration:</br>
+        
+        <b>interface=wlan0</b></br>
+        <b>bridge=br0</b></br>
+        <b>hw_mode=g</b></br>
+        <b>channel=7</b></br>
+        <b>wmm_enabled=0</b></br>
+        <b>macaddr_acl=0</b></br>
+        <b>auth_algs=1</b></br>
+        <b>ignore_broadcast_ssid=0</b></br>
+        <b>wpa=2</b></br>
+        <b>wpa_key_mgmt=WPA-PSK</b></br>
+        <b>wpa_pairwise=TKIP</b></br>
+        <b>rsn_pairwise=CCMP</b></br>
+        <b>ssid=NETWORK</b></br>
+        <b>wpa_passphrase=PASSWORD</b></br>
+        
+        NETWORK und PASSWORD sind hier Platzhalter und hier sollteset du dir einen Netzwerknamen und ein Passwort ausdenken:)!</br>
+        
+        Wir müssen dem System noch zeigen wo unsere Netzwerk-Konfiguration liegt.
+        Gebe folgende Anweisung in die Kommandozeile ein:</br>
+        
+        <b>sudo nano /etc/default/hostapd</b></br>
+        
+        In dieser Datei sollte folgende Zeile sein " #DAEMON_CONF=”” ".</br>
+        Hier muss das # gelöscht werden und in die Anführungszeichen dann der Pfad zu der Netzwerk-Konfiguration:</br>
+      
+        DAEMON_CONF="/etc/hostapd/hostapd.conf"</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding padding-64 container">
+  <div class="content">
+    <div class="twothird">
+      <h1>Schritt 6</h1>
+      <h5 class="padding-32">Einstellung des Netzwerk-Verkehrs</h5>
+
+      <p class="text-grey">Der Rasperry-Pi soll den Verkehr über das Ethernet-Kabel weiterleiten. Also müssen wir das Wlan0-Interface über das Ethernet-Interface an den Modem weiterleiten lassen.
+        Damit das gewährleistet ist müssen folgende Anweisung in die Kommandozeile:</br> 
+        
+        <b>sudo nano /etc/sysctl.conf</b></br>
+        
+        In dieser Datei sollte " #net.ipv4.ip_forward=1 " vorhanden sein. Lösche das "#" und speicher die Datei.</p>
+    </div>
+
+    <div class="third center">
+      <img alt="DHCPServer" src="NetworkTraffic.png"
+	  width="300" height="300">
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding light-grey padding-64 container">
+  <div class="content">
+    <div class="third center">
+      <img alt="DHCPServer" src="IpTable.png"
+	  width="300" height="300">
+    </div>
+
+    <div class="twothird">
+      <h1>Schritt 7</h1>
+      <h5 class="padding-32">Erstelle eine neue IP-Table</h5>
+
+      <p class="text-grey">Gebe folgende Anweisung in die Kommandozeile ein:</br>
+        <b>sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</b></br>
+        
+        Und speicher diese Datei.
+        
+        Gebe folgenden Befehl in die Kommandozeile ein, damit die IP-Table beim Start geladen wird:
+        Hier ist darauf zu achten, dass die Zeile über der Zeile exit0: eingefügt werden muss.
+        
+        Gebe folgende Zeile ein um die Datei zu bearbeiten:</br>
+        
+        <b>sudo nano /etc/rc.local</b></br>
+        
+        Diese Zeile soll hinzugefügt werden:</br>
+        
+        iptables-restore "< /etc/iptables.ipv4.nat"</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding padding-64 container">
+  <div class="content">
+    <div class="twothird">
+      <h1>Schritt 8</h1>
+      <h5 class="padding-32">Aktiviere die Internetverbindung</h5>
+
+      <p class="text-grey">Der Rasperry-Pi verhält sich nun wie ein Access-Point. Jedoch haben die Geräte gerade keine Internetverbindung, wenn sie sich verbinden.
+        Damit der Netzverkehr weitergeleitet wird müssen wir eine sog. Bridge zwischen den Wlan0-Interface und Eth0-Interface konfigurieren.
+        
+        Damit die Bridge aufgebaut werden kann brauchen wir ein weiteres Package:</br>
+        
+        <b>sudo apt-get install bridge-utils</b></br>
+        
+        Somit ist das Package installiert und mit folgender Zeile erstellen wir eine Bridge:</br>
+        
+        <b>sudo brctl addbr br0</b></br>
+        
+        Nun müssen wir das Eth0-Interface mit unserer Bridge verknüpfen:</br>
+        
+        <b>sudo brctl addif br0 eth0</b></br>
+        
+        Und zu anschließend noch die Interface-Datei anpassen:</br>
+        
+        <b>sudo nano /etc/network/interfaces</b></br>
+        
+        Mit folgenden Zeilen am Ende der Datei:</br>
+        
+        auto br0</br>
+        iface br0 inet manual</br>
+        bridge_ports eth0 wlan0.</p>
+    </div>
+
+    <div class="third center">
+          <img alt="DHCPServer" src="InternetConnection.svg"
+	  width="300" height="300">
+    </div>
+  </div>
+</div>
+
+
+<div class="row-padding light-grey padding-64 container">
+  <div class="content">
+    <div class="third center">
+      <img alt="DHCPServer" src="CompletedTask.png"
+	  width="300" height="300">
+    </div>
+
+    <div class="twothird">
+      <h1>Schritt 9</h1>
+      <h5 class="padding-32">Neustart des Pi's</h5>
+
+      <p class="text-grey">Du hast es geschafft wir müssen nur den Pi neustart mit folgendem Befehl und dein Rapserrry Pi sollte nun ein vollwertiger Router sein!</br>
+			
+        <b>sudo reboot</b></br></p>
+    </div>
+  </div>
+</div>
+
+<div class="container black center opacity padding-64">
+    <h1 class="margin xlarge">Als Master deines selbstgemachten Access-Points hast du die Macht über alle Datenpakete die durchlaufen! 
+	Was das heißt weißt du ja selber ;)..
+	</h1>
+</div>
+
+
+<footer class="container padding-64 center opacity">  
+  <div class="xlarge padding-32">
+		<h3>Impressum</h3>
+          <p>ApesStrongTogether Gmbh</p>
+          <p>Gutleutstraße 333-335</p>
+          <p>60327 Frankfurt am Main</p>
+ </div>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("show") == -1) {
+    x.className += " show";
+  } else { 
+    x.className = x.className.replace(" show", "");
+  }
+}
+</script>
+
+</body>
+</html>

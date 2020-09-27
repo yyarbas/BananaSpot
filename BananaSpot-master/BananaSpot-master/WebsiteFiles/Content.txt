@@ -1,0 +1,138 @@
+Schritt1 : Installiere und Update Raspbian
+			Setze folgende Zeilen in der Kommandozeile ab und führe sie aus und führe danach einen Neustart durch: 
+			sudo apt-get update
+			sudo apt-get upgrade
+			
+			
+Schritt2 : Installiere hostapd and dnsmasq
+			Info: Diese zwei Programme lassen deinen Rasperry Pi so wie einen Router arbeiten.
+			Setze folgende Zeilen in der Kommandozeile ab:			
+			sudo apt-get install hostapd
+			sudo apt-get install dnsmasq
+			
+			
+Schritt3 : Konfiguriere eine statische IP-Adresse für das Wlan0-Interface 
+			Die standart IP-Adresse für ein Netzwerk zu Hause sollte so aussehen "192.168.###.###."(# sind hier lediglich Platzhalter). 
+			In unserem Beispiel ist die IP-Adresse von unserem Wlan0-Interface 192.168.0.20.
+			
+			Öffne den Editor mit folgendem Befehl:
+			sudo nano /etc/dhcpcd.conf
+			Und nun füge die folgenden Zeilen am Ende des Dokumentes hinzu:
+
+			interface wlan0
+			static ip_address=192.168.0.20/24
+			denyinterfaces eth0
+			denyinterfaces wlan0
+			(The last two lines are needed in order to make our bridge work –- but more on that in
+			Step 8.)
+			
+			Nach dem die Zeilen hinzugefügt sind drücke strg + X dann Y und Enter damit die Datei gespeichert wird.
+			
+			
+Schritt4 : Konfiguriere den DHCP-Server (dnsmasq)
+			Wir verwenden dnsmasq als unseren DHCP-Server. Dieser DHCP-Server verteilt die Netzwerk-Konfiguration dynamisch an die Netzteilnehmer.
+			Dnsmasq Standart-Konfiguration beinhaltet eine Menge unnötiger Informationen, daher benennen wir die Standart-Konfigurations Datei um und schreibe einen neue Datei mit folgenden Zeilen:
+			sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+			sudo nano /etc/dnsmasq.conf
+			
+			Somit hast du die eigentliche Datei auf "dnsmasq.conf.orig" umbenannt und erstellst eine neue Datei mit dem Namen "dnsmasq.conf".
+			
+			In diese neue Datei soll dann folgende Konfiguration enthalten sein: 
+			
+			interface=wlan0
+			dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h
+			
+			
+Schritt5 : Konfiguration des Access-Points Host-Software (hostapd)
+			Dieses Mal konfigurieren wir die hostapd-Datei mit folgenden Zeilen:
+			
+			sudo nano /etc/hostapd/hostapd.conf
+			
+			Und in diese Datei soll folgende Konfiguration: 
+			
+			interface=wlan0
+			bridge=br0
+			hw_mode=g
+			channel=7
+			wmm_enabled=0
+			macaddr_acl=0
+			auth_algs=1
+			ignore_broadcast_ssid=0
+			wpa=2
+			wpa_key_mgmt=WPA-PSK
+			wpa_pairwise=TKIP
+			rsn_pairwise=CCMP
+			ssid=NETWORK
+			wpa_passphrase=PASSWORD
+			
+			NETWORK und PASSWORD sind hier Platzhalter und hier sollteset du dir einen Netzwerknamen und ein Passwort ausdenken :)!
+			
+			Wir müssen dem System noch zeigen wo unsere Netzwerk-Konfiguration liegt.
+			Gebe folgende Anweisung in die Kommandozeile ein:
+			
+			sudo nano /etc/default/hostapd
+			
+			In dieser Datei sollte folgende Zeile sein " #DAEMON_CONF=”” ". Hier muss das # gelöscht werden und in die Anführungszeichen dann der Pfad zu der Netzwerk-Konfiguration:
+		
+			DAEMON_CONF="/etc/hostapd/hostapd.conf"
+
+Schritt6 : Einstellung des Netzwerk-Verkehrs
+			Der Rasperry-Pi soll den Verkehr über das Ethernet-Kabel weiterleiten. Also müssen wir das Wlan0-Interface über das Ethernet-Interface an den Modem weiterleiten lassen.
+			Damit das gewährleistet ist müssen folgende Anweisung in die Kommandozeile: 
+			
+			sudo nano /etc/sysctl.conf
+			
+			In dieser Datei sollte " #net.ipv4.ip_forward=1 " vorhanden sein ersetze " # "  und speichere die Datei.
+			
+Schritt7 : Erstelle eine neue IP-Table  
+			Gebe folgende Anweisung in die Kommandozeile ein:
+			sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+			
+			Und speichere diese Datei.
+			
+			Gebe folgende Anweisung in die Kommandozeile ein, damit die IP-Table beim Start geladen wird:
+			Hier ist zu achten, dass die Zeile über der Zeile exit0: eingefügt werden muss.
+			
+			Gebe folgende Zeile ein um die Datei zu bearbeiten:
+			
+			sudo nano /etc/rc.local
+			
+			Diese Zeile soll hinzugefügt werden: 
+			
+			iptables-restore < /etc/iptables.ipv4.nat
+
+Schritt8 : Aktiviere die Internetverbindung 
+			Der Rasperry-Pi verhält sich nun wie ein Access-Point. Jedoch haben die Geräte gerade keine Internetverbindung, wenn sie sich verbinden.
+			Damit der Netzverkehr weitergeleitet wird müssen wir eine sog. Bridge zwischen den Wlan0-Interface und Eth0-Interface konfigurieren.
+			
+			Damit die Bridge aufgebaut werden kann brauchen wir ein weiteres Package:
+			
+			sudo apt-get install bridge-utils
+			
+			Somit ist das Package installier und mit folgender Zeile erstellen wir eine Bridge: 
+			
+			sudo brctl addbr br0
+			
+			Nun müssen wir das Eth0-Interface mit unserer Bridge verknüpfen: 
+			
+			sudo brctl addif br0 eth0
+			
+			Und zu anschließend noch die Interface-Datei anpassen: 
+			
+			sudo nano /etc/network/interfaces
+			
+			Mit folgenden Zeilen am ende der Datei: 
+			
+			auto br0
+			iface br0 inet manual
+			bridge_ports eth0 wlan0
+
+Schritt9 : Neustart des Pi's
+			Du hast es geschafft wir müssen nur den Pi neustart mit folgendem Befehl und dein Rapserrry Pi sollte nun ein vollwertiger Router sein !
+			
+			sudo reboot
+			
+			
+			
+			
+			

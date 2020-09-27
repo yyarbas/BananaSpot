@@ -1,0 +1,56 @@
+﻿html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
+
+h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}h4{font-size:20px}h5{font-size:18px}h6{font-size:16px}
+h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
+
+hr{border:0;border-top:1px solid #eee;margin:20px 0}
+.btn,.button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.btn,.button{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}   
+
+.text{display:none}.text{display:inline-block}
+.bar-block{width:100%}
+
+.bar{width:100%;overflow:hidden}
+.bar .bar-item{padding:8px 16px;float:left;width:auto;border:none;display:block;outline:0}
+.bar .button{white-space:normal}
+.bar-block .bar-item{width:100%;display:block;padding:8px 16px;text-align:left;border:none;white-space:normal;float:none;outline:0}
+.bar-block.center .bar-item{text-align:center}
+
+.container:after,.container:before,.panel:after,.panel:before,.row:after,.row:before,.row-padding:after,.row-padding:before,
+.bar:before,.bar:after{content:"";display:table;clear:both}
+.third,.twothird{float:left;width:100%}
+@media (min-width:601px){.col.m1{width:8.33333%}.col.m2{width:16.66666%}.col.m3,.quarter{width:24.99999%}.col.m4,.third{width:33.33333%}
+.twothird{width:66.66666%}
+
+@media (min-width:993px){.col.l1{width:8.33333%}.col.l2{width:16.66666%}.col.l3{width:24.99999%}.col.l4{width:33.33333%}
+.content{max-width:980px;margin-left:auto;margin-right:auto}
+.hide{display:none!important}.show-block,.show{display:block!important}
+.hide-small{display:none!important}.mobile{display:block;width:100%!important}.bar-item
+.button,.button{width:100%}}
+
+@media (min-width:993px){.hide-large{display:none!important}}
+@media (max-width:992px) and (min-width:601px){.hide-medium{display:none!important}}
+.top{position:fixed;width:100%;z-index:1}.top{top:0;bottom:0}
+.row-padding,.row-padding>.third,.row-padding>.twothird
+.container{padding:0.01em 16px;margin-top:16px;margin-bottom:16px}
+.codespan{color:crimson;background-color:#f1f1f1;padding-left:4px;padding-right:4px;font-size:110%}
+.card{box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)}
+.opacity,.hover-opacity:hover{opacity:0.60} 	
+.xlarge{font-size:24px!important}.jumbo{font-size:64px!important}
+.center{text-align:center!important}
+.margin{margin:16px!important}
+.margin-right{margin-right:16px!important}
+
+.padding{padding:8px 16px!important}.padding-large{padding:12px 24px!important}
+.padding-32{padding-top:32px!important;padding-bottom:32px!important}.padding-48{padding-top:48px!important;padding-bottom:48px!important}
+.padding-64{padding-top:64px!important;padding-bottom:64px!important}
+.left{float:left!important}.right{float:right!important}
+.button:hover{color:#000!important;background-color:#ccc!important}
+
+/* Colors */
+
+.blue,.hover-blue:hover{color:#fff!important;background-color:#2196F3!important}
+.white,.hover-white:hover{color:#000!important;background-color:#fff!important}
+.black,.hover-black:hover{color:#fff!important;background-color:#000!important}
+.light-grey,.hover-light-grey:hover,.light-gray,.hover-light-gray:hover{color:#000!important;background-color:#f1f1f1!important}
