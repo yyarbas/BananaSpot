@@ -34,8 +34,26 @@
   <div class="content">
     <div class="twothird">
       <h1>BananaSpot</h1>
-      <h5 class="padding-32">Du hast Probleme mit deiner Internetverbindung wegen deinem sch?!# Router? Und hast keine Lust auf den nervigen Support, der eh nur wieder sagt, dass du den Router neustarten sollst? Hier ist die perfekte DIY Lösung! </h5>
-
+      <h5 class="padding-32">Du hast Probleme mit deiner Internetverbindung wegen deinem sch?!# Router? Und hast keine Lust auf den nervigen Support, der eh nur wieder sagt, dass du den Router neustarten sollst? Hier ist die perfekte DIY Lösung!</h5>
+      <p>Damit ihr keine Zeit verliert und suchen müsst haben wir euch die nötigen Teile hier schon verlinkt.</p>
+      <table>
+                <tr>
+                  <th>Artikel</th>
+                  <th>Link</th>
+                </tr>
+                <tr>
+                  <td>RasperryPi 3B</td>
+                  <td><a href="https://www.alternate.de/Raspberry-Pi-Foundation/Raspberry-Pi-3-model-B-Mainboard/html/product/1258983?">Show!</a></td>
+                </tr>
+                <tr>
+                  <td>Wlan Adapter</td>
+                  <td><a href="https://www.alternate.de/D-Link/DWA-131-WLAN-Adapter/html/product/655592?event=search">Show!</a></td>
+                </tr>
+                <tr>
+                  <td>RasperryPi 3B + Case</td>
+                  <td><a href="https://www.alternate.de/Raspberry-Pi-Foundation/Geh%C3%A4use-f%C3%BCr-Raspberry-Pi-3B-Bplus/html/product/1466711?event=search">Show!</a></td>
+                </tr>
+              </table>
       <p class="text-grey"></p>
     </div>
   </div>
@@ -53,9 +71,9 @@
       <h1>Schritt 1</h1>
       <h5 class="padding-32">Installiere und Update Raspbian</h5>
 
-      <p class="text-grey">Setze folgende Zeilen in der Kommandozeile ab und führe sie aus und führe danach einen Neustart durch: 
-        sudo apt-get update
-        sudo apt-get upgrade</p>
+      <p class="text-grey">Setze folgende Zeilen in der Kommandozeile ab und führe sie aus und führe danach einen Neustart durch:</br>
+        <b>sudo apt-get update</b></br>
+        <b>sudo apt-get upgrade</b></p>
     </div> 
   </div>
 </div>
@@ -69,9 +87,9 @@
 
       <p class="text-grey">Installiere hostapd and dnsmasq
         Info: Diese zwei Programme lassen deinen Rasperry Pi so wie einen Router arbeiten.
-        Setze folgende Zeilen in der Kommandozeile ab:			
-        sudo apt-get install hostapd
-        sudo apt-get install dnsmasq</p>
+        Setze folgende Zeilen in der Kommandozeile ab:</br>			
+        <b>sudo apt-get install hostapd</b></br>
+        <b>sudo apt-get install dnsmasq</b></p>
     </div>
 
     <div class="third center">
@@ -94,16 +112,16 @@
       <h5 class="padding-32">Konfiguriere eine statische IP-Adresse für das Wlan0-Interface</h5>
 
       <p class="text-grey">Die standart IP-Adresse für ein Netzwerk zu Hause sollte so aussehen "192.168.###.###."(# sind hier lediglich Platzhalter). 
-        In unserem Beispiel ist die IP-Adresse von unserem Wlan0-Interface 192.168.0.20.
+        In unserem Beispiel ist die IP-Adresse von unserem Wlan0-Interface 192.168.0.20.</br>
         
-        Öffne den Editor mit folgendem Befehl:
-        sudo nano /etc/dhcpcd.conf
-        Und nun füge die folgenden Zeilen am Ende des Dokumentes hinzu:
+        Öffne den Editor mit folgendem Befehl:</br>
+        <b>sudo nano /etc/dhcpcd.conf</b></br>
+        Und nun füge die folgenden Zeilen am Ende des Dokumentes hinzu:</br>
   
-        interface wlan0
-        static ip_address=192.168.0.20/24
-        denyinterfaces eth0
-        denyinterfaces wlan0
+        <b>interface wlan0</b></br>
+        <b>static ip_address=192.168.0.20/24</b></br>
+        <b>denyinterfaces eth0</b></br>
+        <b>denyinterfaces wlan0</b></br>
         
         Nach dem die Zeilen hinzugefügt sind drücke strg + X dann Y und Enter damit die Datei gespeichert wird.</p>
     </div>
@@ -118,16 +136,16 @@
       <h5 class="padding-32">Konfiguriere den DHCP-Server (dnsmasq)</h5>
 
       <p class="text-grey">Wir verwenden dnsmasq als unseren DHCP-Server. Dieser DHCP-Server verteilt die Netzwerk-Konfiguration dynamisch an die Netzteilnehmer.
-        Dnsmasq Standart-Konfiguration beinhaltet eine Menge unnötiger Informationen, daher benennen wir die Standart-Konfigurations Datei um und schreibe einen neue Datei mit folgenden Zeilen:
-        sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
-        sudo nano /etc/dnsmasq.conf
+        Dnsmasq Standart-Konfiguration beinhaltet eine Menge unnötiger Informationen, daher benennen wir die Standart-Konfigurations Datei um und schreibe einen neue Datei mit folgenden Zeilen:</br>
+        <b>sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig</b></br>
+        <b>sudo nano /etc/dnsmasq.conf</b></br>
         
         Somit hast du die eigentliche Datei auf "dnsmasq.conf.orig" umbenannt und erstellst eine neue Datei mit dem Namen "dnsmasq.conf".
         
-        In diese neue Datei soll dann folgende Konfiguration enthalten sein: 
+        In diese neue Datei soll dann folgende Konfiguration enthalten sein:</br>
         
-        interface=wlan0
-        dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h</p>
+        <b>interface=wlan0</b></br>
+        <b>dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h</b></p>
     </div>
 
     <div class="third center">
@@ -149,35 +167,36 @@
       <h1>Schritt 5</h1>
       <h5 class="padding-32">Konfiguration des Access-Points Host-Software (hostapd)</h5>
 
-      <p class="text-grey">Dieses Mal konfigurieren wir die hostapd-Datei mit folgenden Zeilen:
+      <p class="text-grey">Dieses Mal konfigurieren wir die hostapd-Datei mit folgenden Zeilen:</br>
 			
-        sudo nano /etc/hostapd/hostapd.conf
+        <b>sudo nano /etc/hostapd/hostapd.conf</b></br>
         
-        Und in diese Datei soll folgende Konfiguration: 
+        Und in diese Datei soll folgende Konfiguration:</br>
         
-        interface=wlan0
-        bridge=br0
-        hw_mode=g
-        channel=7
-        wmm_enabled=0
-        macaddr_acl=0
-        auth_algs=1
-        ignore_broadcast_ssid=0
-        wpa=2
-        wpa_key_mgmt=WPA-PSK
-        wpa_pairwise=TKIP
-        rsn_pairwise=CCMP
-        ssid=NETWORK
-        wpa_passphrase=PASSWORD
+        <b>interface=wlan0</b></br>
+        <b>bridge=br0</b></br>
+        <b>hw_mode=g</b></br>
+        <b>channel=7</b></br>
+        <b>wmm_enabled=0</b></br>
+        <b>macaddr_acl=0</b></br>
+        <b>auth_algs=1</b></br>
+        <b>ignore_broadcast_ssid=0</b></br>
+        <b>wpa=2</b></br>
+        <b>wpa_key_mgmt=WPA-PSK</b></br>
+        <b>wpa_pairwise=TKIP</b></br>
+        <b>rsn_pairwise=CCMP</b></br>
+        <b>ssid=NETWORK</b></br>
+        <b>wpa_passphrase=PASSWORD</b></br>
         
-        NETWORK und PASSWORD sind hier Platzhalter und hier sollteset du dir einen Netzwerknamen und ein Passwort ausdenken :)!
+        NETWORK und PASSWORD sind hier Platzhalter und hier sollteset du dir einen Netzwerknamen und ein Passwort ausdenken:)!</br>
         
         Wir müssen dem System noch zeigen wo unsere Netzwerk-Konfiguration liegt.
-        Gebe folgende Anweisung in die Kommandozeile ein:
+        Gebe folgende Anweisung in die Kommandozeile ein:</br>
         
-        sudo nano /etc/default/hostapd
+        <b>sudo nano /etc/default/hostapd</b></br>
         
-        In dieser Datei sollte folgende Zeile sein " #DAEMON_CONF=”” ". Hier muss das # gelöscht werden und in die Anführungszeichen dann der Pfad zu der Netzwerk-Konfiguration:
+        In dieser Datei sollte folgende Zeile sein " #DAEMON_CONF=”” ".</br>
+        Hier muss das # gelöscht werden und in die Anführungszeichen dann der Pfad zu der Netzwerk-Konfiguration:</br>
       
         DAEMON_CONF="/etc/hostapd/hostapd.conf"</p>
     </div>
@@ -192,11 +211,11 @@
       <h5 class="padding-32">Einstellung des Netzwerk-Verkehrs</h5>
 
       <p class="text-grey">Der Rasperry-Pi soll den Verkehr über das Ethernet-Kabel weiterleiten. Also müssen wir das Wlan0-Interface über das Ethernet-Interface an den Modem weiterleiten lassen.
-        Damit das gewährleistet ist müssen folgende Anweisung in die Kommandozeile: 
+        Damit das gewährleistet ist müssen folgende Anweisung in die Kommandozeile:</br> 
         
-        sudo nano /etc/sysctl.conf
+        <b>sudo nano /etc/sysctl.conf</b></br>
         
-        In dieser Datei sollte " #net.ipv4.ip_forward=1 " vorhanden sein ersetze " # "  und speichere die Datei.</p>
+        In dieser Datei sollte " #net.ipv4.ip_forward=1 " vorhanden sein. Lösche das "#" und speicher die Datei.</p>
     </div>
 
     <div class="third center">
@@ -218,19 +237,19 @@
       <h1>Schritt 7</h1>
       <h5 class="padding-32">Erstelle eine neue IP-Table</h5>
 
-      <p class="text-grey">Gebe folgende Anweisung in die Kommandozeile ein:
-        sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+      <p class="text-grey">Gebe folgende Anweisung in die Kommandozeile ein:</br>
+        <b>sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</b></br>
         
-        Und speichere diese Datei.
+        Und speicher diese Datei.
         
-        Gebe folgende Anweisung in die Kommandozeile ein, damit die IP-Table beim Start geladen wird:
-        Hier ist zu achten, dass die Zeile über der Zeile exit0: eingefügt werden muss.
+        Gebe folgenden Befehl in die Kommandozeile ein, damit die IP-Table beim Start geladen wird:
+        Hier ist darauf zu achten, dass die Zeile über der Zeile exit0: eingefügt werden muss.
         
-        Gebe folgende Zeile ein um die Datei zu bearbeiten:
+        Gebe folgende Zeile ein um die Datei zu bearbeiten:</br>
         
-        sudo nano /etc/rc.local
+        <b>sudo nano /etc/rc.local</b></br>
         
-        Diese Zeile soll hinzugefügt werden: 
+        Diese Zeile soll hinzugefügt werden:</br>
         
         iptables-restore "< /etc/iptables.ipv4.nat"</p>
     </div>
@@ -247,26 +266,26 @@
       <p class="text-grey">Der Rasperry-Pi verhält sich nun wie ein Access-Point. Jedoch haben die Geräte gerade keine Internetverbindung, wenn sie sich verbinden.
         Damit der Netzverkehr weitergeleitet wird müssen wir eine sog. Bridge zwischen den Wlan0-Interface und Eth0-Interface konfigurieren.
         
-        Damit die Bridge aufgebaut werden kann brauchen wir ein weiteres Package:
+        Damit die Bridge aufgebaut werden kann brauchen wir ein weiteres Package:</br>
         
-        sudo apt-get install bridge-utils
+        <b>sudo apt-get install bridge-utils</b></br>
         
-        Somit ist das Package installier und mit folgender Zeile erstellen wir eine Bridge: 
+        Somit ist das Package installiert und mit folgender Zeile erstellen wir eine Bridge:</br>
         
-        sudo brctl addbr br0
+        <b>sudo brctl addbr br0</b></br>
         
-        Nun müssen wir das Eth0-Interface mit unserer Bridge verknüpfen: 
+        Nun müssen wir das Eth0-Interface mit unserer Bridge verknüpfen:</br>
         
-        sudo brctl addif br0 eth0
+        <b>sudo brctl addif br0 eth0</b></br>
         
-        Und zu anschließend noch die Interface-Datei anpassen: 
+        Und zu anschließend noch die Interface-Datei anpassen:</br>
         
-        sudo nano /etc/network/interfaces
+        <b>sudo nano /etc/network/interfaces</b></br>
         
-        Mit folgenden Zeilen am ende der Datei: 
+        Mit folgenden Zeilen am Ende der Datei:</br>
         
-        auto br0
-        iface br0 inet manual
+        auto br0</br>
+        iface br0 inet manual</br>
         bridge_ports eth0 wlan0.</p>
     </div>
 
@@ -289,9 +308,9 @@
       <h1>Schritt 9</h1>
       <h5 class="padding-32">Neustart des Pi's</h5>
 
-      <p class="text-grey">Du hast es geschafft wir müssen nur den Pi neustart mit folgendem Befehl und dein Rapserrry Pi sollte nun ein vollwertiger Router sein !
+      <p class="text-grey">Du hast es geschafft wir müssen nur den Pi neustart mit folgendem Befehl und dein Rapserrry Pi sollte nun ein vollwertiger Router sein!</br>
 			
-        sudo reboot</p>
+        <b>sudo reboot</b></br></p>
     </div>
   </div>
 </div>
